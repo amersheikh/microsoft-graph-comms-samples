@@ -45,7 +45,8 @@ if (! (Get-AzKeyVault -Name $KVName -EA SilentlyContinue))
     {
         New-AzKeyVault -Name $KVName -ResourceGroupName $RGName -Location $Location `
             -EnabledForDeployment -EnabledForTemplateDeployment -EnablePurgeProtection:$EnablePurgeProtection `
-            -EnableRbacAuthorization -Sku Standard -ErrorAction Stop
+        #   -EnableRbacAuthorization -Sku Standard -ErrorAction Stop
+            -Sku Standard -ErrorAction Stop
     }
     catch
     {
@@ -61,6 +62,7 @@ if (Get-AzKeyVault -Name $KVName -EA SilentlyContinue)
     try
     {
         $CurrentUserId = Get-AzContext | ForEach-Object account | ForEach-Object Id
+        $CurrentUserId = "amersheik_gmail.com#EXT#@amersheikgmail.onmicrosoft.com"
         if (! (Get-AzRoleAssignment -ResourceGroupName $RGName -SignInName $CurrentUserId -RoleDefinitionName $RoleName))
         {
             New-AzRoleAssignment -ResourceGroupName $RGName -SignInName $CurrentUserId -RoleDefinitionName $RoleName -Verbose
